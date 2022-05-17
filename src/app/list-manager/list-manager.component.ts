@@ -9,7 +9,7 @@ import { TodoItem } from '../interfaces/todo-item'
       <app-form-component (submit)="addItem($event)"></app-form-component>
       <ul>
         <li *ngFor="let todoItem of todoList">
-          <app-task-card-component [item]="todoItem"></app-task-card-component>
+          <app-task-card-component [item]="todoItem" (remove)="removeItem($event)"></app-task-card-component>
         </li>
       </ul>
     </div>
@@ -22,6 +22,11 @@ export class ListManagerComponent implements OnInit {
 
   addItem(data: { title: string; text: string; responsible: string }) {
     this.todoList.push({ title: data.title, text: data.text, responsible: data.responsible })
+  }
+
+  removeItem(removeItem) {
+    const newArray = this.todoList.filter((item) => item.title !== removeItem.title)
+    this.todoList = newArray
   }
 
   constructor() {}

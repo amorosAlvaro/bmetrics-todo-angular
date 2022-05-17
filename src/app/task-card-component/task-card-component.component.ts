@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
 
 @Component({
@@ -11,7 +11,7 @@ import { TodoItem } from '../interfaces/todo-item'
     </mat-card-content>
     <mat-divider inset></mat-divider>
     <mat-card-actions>
-      <button mat-button>Delete</button>
+      <button mat-button (click)="removeItem()">Delete</button>
       <button mat-button>Edit</button>
     </mat-card-actions>
     <mat-card-footer>
@@ -22,8 +22,12 @@ import { TodoItem } from '../interfaces/todo-item'
 })
 export class TaskCardComponentComponent implements OnInit {
   @Input() item: TodoItem
+  @Output() remove: EventEmitter<TodoItem> = new EventEmitter<TodoItem>()
 
   constructor() {}
 
+  removeItem(): void {
+    this.remove.emit(this.item)
+  }
   ngOnInit() {}
 }
