@@ -1,24 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { InputButtonUnitComponent } from './input-button-unit/input-button-unit.component';
-import { TodoItemComponent } from './todo-item/todo-item.component';
-import { ListManagerComponent } from './list-manager/list-manager.component';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { InputButtonUnitComponent } from './input-button-unit/input-button-unit.component'
+import { TodoItemComponent } from './todo-item/todo-item.component'
+import { ListManagerComponent } from './list-manager/list-manager.component'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TaskCardComponentComponent } from './task-card-component/task-card-component.component'
+import {
+  MatCardModule,
+  MatDividerModule,
+  MatProgressBarModule,
+} from '@angular/material'
 
 @NgModule({
   declarations: [
     AppComponent,
     InputButtonUnitComponent,
     TodoItemComponent,
-    ListManagerComponent
+    ListManagerComponent,
+    TaskCardComponentComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule,
+    MatCardModule,
+    MatDividerModule,
+    MatProgressBarModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

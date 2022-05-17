@@ -10,6 +10,7 @@ import { TodoItem } from '../interfaces/todo-item'
       <ul>
         <li *ngFor="let todoItem of todoList">
           <app-todo-item [item]="todoItem"></app-todo-item>
+          <app-task-card-component [item]="todoItem"></app-task-card-component>
         </li>
       </ul>
     </div>
@@ -21,7 +22,8 @@ export class ListManagerComponent implements OnInit {
   todoList: TodoItem[] = []
 
   addItem(title: string) {
-    this.todoList.push({ title })
+    console.log('title', title)
+    this.todoList.push({ title: title, longText: title })
   }
 
   constructor() {}
