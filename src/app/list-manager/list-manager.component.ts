@@ -12,6 +12,7 @@ import { TodoItem } from '../interfaces/todo-item'
           <app-task-card-component [item]="todoItem" (remove)="removeItem($event)"></app-task-card-component>
         </li>
       </ul>
+      <app-open-dialog-button></app-open-dialog-button>
     </div>
   `,
   styleUrls: ['./list-manager.component.css'],
@@ -25,8 +26,7 @@ export class ListManagerComponent implements OnInit {
   }
 
   removeItem(removeItem) {
-    const newArray = this.todoList.filter((item) => item.title !== removeItem.title)
-    this.todoList = newArray
+    this.todoList = this.todoList.filter((item) => item !== removeItem)
   }
 
   constructor() {}

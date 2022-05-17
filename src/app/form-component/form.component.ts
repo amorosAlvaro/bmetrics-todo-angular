@@ -28,9 +28,9 @@ import { MatSelect } from '@angular/material'
       Primary
     </button>
   `,
-  styleUrls: ['./form-component.component.css'],
+  styleUrls: ['./form.component.css'],
 })
-export class FormComponentComponent implements OnInit {
+export class FormComponent implements OnInit {
   @Output() submit: EventEmitter<{
     title: string
     text: string

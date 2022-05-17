@@ -12,16 +12,21 @@ import {
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
+  MatDialogModule,
+  MatButtonModule,
 } from '@angular/material'
-import { FormComponentComponent } from './form-component/form-component.component'
+import { FormComponent } from './form-component/form.component'
+import { OpenDialogButtonComponent } from './open-dialog-button/open-dialog-button.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     ListManagerComponent,
     TaskCardComponentComponent,
-    FormComponentComponent,
+    FormComponent,
+    OpenDialogButtonComponent,
   ],
+  entryComponents: [FormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,6 +37,8 @@ import { FormComponentComponent } from './form-component/form-component.componen
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
