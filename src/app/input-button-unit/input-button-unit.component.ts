@@ -22,7 +22,6 @@ export class InputButtonUnitComponent implements OnInit {
   constructor() {}
 
   submitValue(newTitle: string): void {
-    console.log(newTitle)
     this.submit.emit(newTitle)
   }
 

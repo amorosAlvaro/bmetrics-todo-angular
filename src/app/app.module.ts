@@ -11,7 +11,11 @@ import {
   MatCardModule,
   MatDividerModule,
   MatProgressBarModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
 } from '@angular/material'
+import { FormComponentComponent } from './form-component/form-component.component'
 
 @NgModule({
   declarations: [
@@ -20,6 +24,7 @@ import {
     TodoItemComponent,
     ListManagerComponent,
     TaskCardComponentComponent,
+    FormComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +33,9 @@ import {
     MatCardModule,
     MatDividerModule,
     MatProgressBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

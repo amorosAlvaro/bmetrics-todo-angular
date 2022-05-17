@@ -7,6 +7,7 @@ import { TodoItem } from '../interfaces/todo-item'
     <div>
       <h3>Todo list:</h3>
       <app-input-button-unit (submit)="addItem($event)"></app-input-button-unit>
+      <app-form-component (submit)="addItem($event)"></app-form-component>
       <ul>
         <li *ngFor="let todoItem of todoList">
           <app-todo-item [item]="todoItem"></app-todo-item>
@@ -21,9 +22,9 @@ export class ListManagerComponent implements OnInit {
   title = 'todo-list for bmetric'
   todoList: TodoItem[] = []
 
-  addItem(title: string) {
-    console.log('title', title)
-    this.todoList.push({ title: title, longText: title })
+  addItem(data: { newTitle: string; newText: string }) {
+    console.log('title', data)
+    this.todoList.push({ title: data.newTitle, longText: data.newText })
   }
 
   constructor() {}
