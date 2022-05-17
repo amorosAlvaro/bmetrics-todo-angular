@@ -1,29 +1,29 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { MatSelect } from '@angular/material'
 
 @Component({
   selector: 'app-form-component',
   template: `
     <mat-form-field appearance="fill">
-      <mat-label>Input</mat-label>
+      <mat-label>Task</mat-label>
       <input matInput #titleInputElementRef />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Select</mat-label>
-      <mat-select>
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
+      <mat-label>Responsible</mat-label>
+      <mat-select #responsibleInputElementRef>
+        <mat-option *ngFor="let item of items" [value]="item.name">
+          {{ item.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Textarea</mat-label>
+      <mat-label>Description</mat-label>
       <textarea matInput #textInputElementRef></textarea>
     </mat-form-field>
     <button
       mat-button
       color="primary"
-      (click)="
-        submitValue(titleInputElementRef.value, textInputElementRef.value)
-      "
+      (click)="submitValue(titleInputElementRef.value, textInputElementRef.value, responsibleInputElementRef.value)"
     >
       Primary
     </button>
@@ -31,14 +31,22 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
   styleUrls: ['./form-component.component.css'],
 })
 export class FormComponentComponent implements OnInit {
-  @Output() submit: EventEmitter<{ newTitle: string; newText: string }> =
-    new EventEmitter<{ newTitle: string; newText: string }>()
+  @Output() submit: EventEmitter<{
+    title: string
+    text: string
+    responsible: string
+  }> = new EventEmitter<{
+    title: string
+    text: string
+    responsible: string
+  }>()
+
+  items: any[] = [{ name: 'Tony' }, { name: 'Carmela' }, { name: 'Christofer' }, { name: 'Adriana' }]
 
   constructor() {}
 
-  submitValue(newTitle: string, newText: string): void {
-    const newData = { newTitle, newText }
-    console.log('buttonclicked:', newData)
+  submitValue(title: string, text: string, responsible: string): void {
+    const newData = { title, text, responsible }
 
     this.submit.emit(newData)
   }

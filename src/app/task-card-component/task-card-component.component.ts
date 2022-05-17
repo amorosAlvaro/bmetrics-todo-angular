@@ -5,9 +5,9 @@ import { TodoItem } from '../interfaces/todo-item'
   selector: 'app-task-card-component',
   template: ` <mat-card class="example-card">
     <mat-card-subtitle>{{ item.title }}</mat-card-subtitle>
-    <mat-card-title>{{ item.title }}</mat-card-title>
+    <mat-card-title>{{ item.responsible }}</mat-card-title>
     <mat-card-content>
-      <p>{{ item.longText }}</p>
+      <p>{{ item.text }}</p>
     </mat-card-content>
     <mat-divider inset></mat-divider>
     <mat-card-actions>

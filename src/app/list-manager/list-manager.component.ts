@@ -20,8 +20,8 @@ export class ListManagerComponent implements OnInit {
   title = 'todo-list for bmetric'
   todoList: TodoItem[] = []
 
-  addItem(data: { newTitle: string; newText: string }) {
-    this.todoList.push({ title: data.newTitle, longText: data.newText })
+  addItem(data: { title: string; text: string; responsible: string }) {
+    this.todoList.push({ title: data.title, text: data.text, responsible: data.responsible })
   }
 
   constructor() {}
