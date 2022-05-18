@@ -12,7 +12,7 @@ import { TodoItem } from '../interfaces/todo-item'
     <mat-divider inset></mat-divider>
     <mat-card-actions>
       <button mat-button (click)="removeItem()">Delete</button>
-      <button mat-button>Edit</button>
+      <button mat-button (click)="editItem()">Edit</button>
     </mat-card-actions>
     <mat-card-footer>
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -23,11 +23,17 @@ import { TodoItem } from '../interfaces/todo-item'
 export class TaskCardComponentComponent implements OnInit {
   @Input() item: TodoItem
   @Output() remove: EventEmitter<TodoItem> = new EventEmitter<TodoItem>()
+  @Output() edit: EventEmitter<TodoItem> = new EventEmitter<TodoItem>()
 
   constructor() {}
 
   removeItem(): void {
     this.remove.emit(this.item)
   }
+
+  editItem(): void {
+    this.edit.emit(this.item)
+  }
+
   ngOnInit() {}
 }
