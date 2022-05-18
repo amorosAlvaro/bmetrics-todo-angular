@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 
 @Component({
-  selector: 'app-form-component',
+  selector: 'app-task-form',
   template: `
     <mat-form-field appearance="fill">
       <mat-label>Task</mat-label>
@@ -18,9 +18,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
     </mat-form-field>
     <button mat-button (click)="onNoClick()">New Task</button>
   `,
-  styleUrls: ['./form.component.css'],
+  styleUrls: ['./task-form.component.css'],
 })
-export class FormComponent implements OnInit {
+export class TaskFormComponent implements OnInit {
   @Output() submit: EventEmitter<{
     title: string
     text: string
@@ -35,7 +35,7 @@ export class FormComponent implements OnInit {
   text: string
   responsible: string
 
-  constructor(public dialogRef: MatDialogRef<FormComponent>, @Inject(MAT_DIALOG_DATA) data) {
+  constructor(public dialogRef: MatDialogRef<TaskFormComponent>, @Inject(MAT_DIALOG_DATA) data) {
     if (data) {
       this.title = data.title
       this.text = data.text
@@ -51,8 +51,5 @@ export class FormComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    console.log('this.title', this.title)
-    console.log('MAT_DIALOG_DATA', MAT_DIALOG_DATA)
-  }
+  ngOnInit() {}
 }

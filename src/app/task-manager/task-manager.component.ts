@@ -1,29 +1,35 @@
 import { Component, OnInit } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
-import { FormComponent } from '../form-component/form.component'
+import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialog, MatDialogConfig } from '@angular/material'
 
 @Component({
-  selector: 'app-list-manager',
+  selector: 'app-task-manager',
   template: `
-    <div>
-      <h3>Todo list:</h3>
-      <ul>
-        <li *ngFor="let todoItem of todoList">
-          <app-task-card-component
+    <ul style="list-style-type:none">
+      <div class="task-card-layout">
+        <li *ngFor="let todoItem of todoList" class="task-card-child">
+          <app-task-card
             [item]="todoItem"
             (remove)="removeItem($event)"
             (edit)="openDialog($event)"
-          ></app-task-card-component>
+          ></app-task-card>
         </li>
-      </ul>
-      <button mat-raised-button (click)="openDialog(null)">Open modal</button>
-    </div>
+      </div>
+    </ul>
+    <button mat-raised-button (click)="openDialog(null)">Open modal</button>
   `,
-  styleUrls: ['./list-manager.component.css'],
+  styleUrls: ['./task-manager.component.css'],
 })
-export class ListManagerComponent implements OnInit {
-  todoList: TodoItem[] = []
+export class TaskManagerComponent implements OnInit {
+  todoList: TodoItem[] = [
+    { title: 'test', text: 'test', responsible: 'test' },
+    { title: 'test', text: 'test', responsible: 'test' },
+    { title: 'test', text: 'test', responsible: 'test' },
+    { title: 'test', text: 'test', responsible: 'test' },
+    { title: 'test', text: 'test', responsible: 'test' },
+    { title: 'test', text: 'test', responsible: 'test' },
+  ]
   title: string
   responsible: string
   text: string
@@ -35,18 +41,6 @@ export class ListManagerComponent implements OnInit {
   }
 
   openDialog(data) {
-    /*
-    if (data) {
-      const dialogConfig = new MatDialogConfig()
-      dialogConfig.data = {
-        title: data.title,
-        responsible: data.responsible,
-        text: data.text,
-      }
-      this.dialog.open(FormComponent, dialogConfig.data)
-    }
-
-     */
     let dialogRef
     if (data) {
       const dialogConfig = new MatDialogConfig()
@@ -56,7 +50,7 @@ export class ListManagerComponent implements OnInit {
         text: data.text,
       }
 
-      dialogRef = this.dialog.open(FormComponent, dialogConfig)
+      dialogRef = this.dialog.open(TaskFormComponent, dialogConfig)
       return dialogRef.afterClosed().subscribe((result) => {
         this.todoList = this.todoList.filter((item) => item !== data)
 
@@ -69,7 +63,7 @@ export class ListManagerComponent implements OnInit {
     }
 
     if (!data) {
-      dialogRef = this.dialog.open(FormComponent)
+      dialogRef = this.dialog.open(TaskFormComponent)
       dialogRef.afterClosed().subscribe((result) => {
         this.todoList.push({
           title: result.title,

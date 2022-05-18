@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormComponent } from './form.component'
+import { TaskCardComponent } from './task-card.component'
 
-describe('FormComponentComponent', () => {
-  let component: FormComponent
-  let fixture: ComponentFixture<FormComponent>
+describe('TaskCardComponentComponent', () => {
+  let component: TaskCardComponent
+  let fixture: ComponentFixture<TaskCardComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FormComponent],
+      declarations: [TaskCardComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormComponent)
+    fixture = TestBed.createComponent(TaskCardComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
