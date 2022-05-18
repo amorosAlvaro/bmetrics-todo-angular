@@ -22,7 +22,9 @@ import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 import { TaskFormComponent } from './task-form/task-form.component'
-import { HeaderComponent } from './header/header.component'
+import { HeaderComponent } from './header/header.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers'
 
 @NgModule({
   declarations: [
@@ -53,6 +55,13 @@ import { HeaderComponent } from './header/header.component'
     MatToolbarModule,
     MatIconModule,
     MatGridListModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
