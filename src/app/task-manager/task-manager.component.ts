@@ -2,13 +2,22 @@ import { Component, OnInit } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
 import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialog, MatDialogConfig } from '@angular/material'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-task-manager',
   template: `
+    <button
+      *ngIf="router === '/admin'"
+      mat-raised-button
+      color="primary"
+      (click)="openDialog(null)"
+    >
+      <span>Add Task</span>
+    </button>
     <ul style="list-style-type:none">
       <div class="task-card-layout">
-        <li *ngFor="let todoItem of todoList" class="task-card-child">
+        <li *ngFor="let todoItem of todoList">
           <app-task-card
             [item]="todoItem"
             (remove)="removeItem($event)"
@@ -17,7 +26,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material'
         </li>
       </div>
     </ul>
-    <button mat-raised-button (click)="openDialog(null)">Open modal</button>
   `,
   styleUrls: ['./task-manager.component.css'],
 })
@@ -33,8 +41,11 @@ export class TaskManagerComponent implements OnInit {
   title: string
   responsible: string
   text: string
+  router: string
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private _router: Router) {
+    this.router = _router.url
+  }
 
   removeItem(removeItem) {
     this.todoList = this.todoList.filter((item) => item !== removeItem)

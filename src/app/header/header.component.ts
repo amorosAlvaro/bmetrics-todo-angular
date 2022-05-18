@@ -6,9 +6,11 @@ import { Component, OnInit } from '@angular/core'
     <mat-toolbar>
       <span>Todo App For Bmetric</span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="favorite-icon" aria-label="Switch to admin">
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <a routerLink="/admin">
+        <button mat-icon-button class="favorite-icon" aria-label="Switch to admin">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </a>
     </mat-toolbar>
   `,
   styleUrls: ['./header.component.css'],

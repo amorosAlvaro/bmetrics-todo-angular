@@ -16,7 +16,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
       <mat-label>Description</mat-label>
       <textarea matInput [(ngModel)]="text"></textarea>
     </mat-form-field>
-    <button mat-button (click)="onNoClick()">New Task</button>
+    <button mat-raised-button color="primary" (click)="onNoClick()">Save</button>
   `,
   styleUrls: ['./task-form.component.css'],
 })

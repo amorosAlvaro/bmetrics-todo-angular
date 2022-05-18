@@ -19,6 +19,7 @@ import {
   MatGridListModule,
 } from '@angular/material'
 import { FormsModule } from '@angular/forms'
+import { RouterModule } from '@angular/router'
 
 import { TaskFormComponent } from './task-form/task-form.component'
 import { HeaderComponent } from './header/header.component'
@@ -34,6 +35,10 @@ import { HeaderComponent } from './header/header.component'
   entryComponents: [TaskFormComponent],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([
+      { path: '', component: TaskManagerComponent },
+      { path: 'admin', component: TaskManagerComponent },
+    ]),
     AppRoutingModule,
     NoopAnimationsModule,
     MatCardModule,

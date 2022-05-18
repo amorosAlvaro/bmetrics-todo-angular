@@ -4,7 +4,7 @@ import { Component } from '@angular/core'
   selector: 'app-root',
   template: `
     <app-header></app-header>
-    <app-task-manager></app-task-manager>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.css'],
 })
