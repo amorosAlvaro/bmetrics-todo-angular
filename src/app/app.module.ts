@@ -15,17 +15,12 @@ import {
   MatDialogModule,
   MatButtonModule,
 } from '@angular/material'
+import { FormsModule } from '@angular/forms'
+
 import { FormComponent } from './form-component/form.component'
-import { OpenDialogButtonComponent } from './open-dialog-button/open-dialog-button.component'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ListManagerComponent,
-    TaskCardComponentComponent,
-    FormComponent,
-    OpenDialogButtonComponent,
-  ],
+  declarations: [AppComponent, ListManagerComponent, TaskCardComponentComponent, FormComponent],
   entryComponents: [FormComponent],
   imports: [
     BrowserModule,
@@ -39,6 +34,7 @@ import { OpenDialogButtonComponent } from './open-dialog-button/open-dialog-butt
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,35 +1,52 @@
 import { Component, OnInit } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
+import { FormComponent } from '../form-component/form.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'app-list-manager',
   template: `
     <div>
       <h3>Todo list:</h3>
-      <app-form-component (submit)="addItem($event)"></app-form-component>
       <ul>
         <li *ngFor="let todoItem of todoList">
-          <app-task-card-component [item]="todoItem" (remove)="removeItem($event)"></app-task-card-component>
+          <app-task-card-component
+            [item]="todoItem"
+            (remove)="removeItem($event)"
+          ></app-task-card-component>
         </li>
       </ul>
-      <app-open-dialog-button></app-open-dialog-button>
+      <button mat-raised-button (click)="openDialog()">Open modal</button>
     </div>
   `,
   styleUrls: ['./list-manager.component.css'],
 })
 export class ListManagerComponent implements OnInit {
-  title = 'todo-list for bmetric'
   todoList: TodoItem[] = []
+  title: string
+  responsible: string
+  text: string
 
-  addItem(data: { title: string; text: string; responsible: string }) {
-    this.todoList.push({ title: data.title, text: data.text, responsible: data.responsible })
-  }
+  constructor(public dialog: MatDialog) {}
 
   removeItem(removeItem) {
     this.todoList = this.todoList.filter((item) => item !== removeItem)
   }
 
-  constructor() {}
+  openDialog() {
+    const dialogRef = this.dialog.open(FormComponent, {
+      width: '250px',
+      data: { title: this.title, text: this.text },
+    })
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.todoList.push({
+        title: result.title,
+        text: result.text,
+        responsible: result.responsible,
+      })
+    })
+  }
 
   ngOnInit() {}
 }
