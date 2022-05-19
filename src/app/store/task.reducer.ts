@@ -36,5 +36,12 @@ export function TaskReducer(state = defaultState, action: Action) {
         tasks: [...state.tasks, action.payload],
       }
     }
+
+    case TaskActions.CREATE_TASK: {
+      return {
+        tasks: [...state.tasks, action.payload],
+      }
+    }
+    
   }
 }

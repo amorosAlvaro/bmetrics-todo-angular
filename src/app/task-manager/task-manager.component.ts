@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
 import { MatDialog, MatDialogConfig } from '@angular/material'
 import { Router } from '@angular/router'
+import { TaskFormComponent } from '../task-form/task-form.component'
 
 import { TaskListState } from '../store/task.state'
 import { Store } from '@ngrx/store'
@@ -11,7 +12,12 @@ import * as TaskActions from '../store/task.actions'
 
 @Component({
   selector: 'app-task-manager',
-  template: ` <button *ngIf="router === '/admin'" mat-raised-button color="primary">
+  template: ` <button
+      *ngIf="router === '/admin'"
+      (click)="openDialog()"
+      mat-raised-button
+      color="primary"
+    >
       <span>Add Task</span>
     </button>
     <div class="tasks" *ngIf="taskListState$ | async as taskListState">
@@ -42,13 +48,13 @@ export class TaskManagerComponent implements OnInit {
     this.store.dispatch(new TaskActions.GetTasks())
   }
 
-  /*
-  removeItem(removeItem) {
-    this.todoList = this.todoList.filter((item) => item !== removeItem)
+  onCreate(task) {
+    this.store.dispatch(new TaskActions.CreateTask(task))
   }
 
   openDialog(data) {
     let dialogRef
+    /*
     if (data) {
       const dialogConfig = new MatDialogConfig()
       dialogConfig.data = {
@@ -69,17 +75,36 @@ export class TaskManagerComponent implements OnInit {
       })
     }
 
+     */
+
     if (!data) {
       dialogRef = this.dialog.open(TaskFormComponent)
       dialogRef.afterClosed().subscribe((result) => {
-        this.todoList.push({
-          title: result.title,
-          text: result.text,
-          responsible: result.responsible,
-        })
+        this.store.dispatch(new TaskActions.CreateTask(result))
       })
     }
   }
+
+  /*
+  onDelete(todo) {
+    this.store.dispatch(new TodoAction.DeleteTodo(todo))
+  }
+
+  onEdit(todo) {
+    this.store.dispatch(new TodoAction.UpdateTodo(todo))
+  }
+
+  completeTodo(todo) {
+    this.store.dispatch(new TodoAction.CompleteTodo(todo))
+  }
+
+   */
+
+  /*
+  removeItem(removeItem) {
+    this.todoList = this.todoList.filter((item) => item !== removeItem)
+  }
+
 
    */
 }
