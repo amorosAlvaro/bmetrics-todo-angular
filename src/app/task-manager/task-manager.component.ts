@@ -1,52 +1,48 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
-import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialog, MatDialogConfig } from '@angular/material'
 import { Router } from '@angular/router'
 
+import { TaskListState } from '../store/task.state'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+
+import * as TaskActions from '../store/task.actions'
+
 @Component({
   selector: 'app-task-manager',
-  template: `
-    <button
-      *ngIf="router === '/admin'"
-      mat-raised-button
-      color="primary"
-      (click)="openDialog(null)"
-    >
+  template: ` <button *ngIf="router === '/admin'" mat-raised-button color="primary">
       <span>Add Task</span>
     </button>
-    <ul style="list-style-type:none">
-      <div class="task-card-layout">
-        <li *ngFor="let todoItem of todoList">
-          <app-task-card
-            [item]="todoItem"
-            (remove)="removeItem($event)"
-            (edit)="openDialog($event)"
-          ></app-task-card>
-        </li>
-      </div>
-    </ul>
-  `,
+    <div class="tasks" *ngIf="taskListState$ | async as taskListState">
+      <ul style="list-style-type:none">
+        <div class="task-card-layout">
+          <li *ngFor="let task of taskListState.tasks">
+            <app-task-card [task]="task"></app-task-card>
+          </li>
+        </div>
+      </ul>
+    </div>`,
   styleUrls: ['./task-manager.component.css'],
 })
 export class TaskManagerComponent implements OnInit {
-  todoList: TodoItem[] = [
-    { title: 'test', text: 'test', responsible: 'test' },
-    { title: 'test', text: 'test', responsible: 'test' },
-    { title: 'test', text: 'test', responsible: 'test' },
-    { title: 'test', text: 'test', responsible: 'test' },
-    { title: 'test', text: 'test', responsible: 'test' },
-    { title: 'test', text: 'test', responsible: 'test' },
-  ]
-  title: string
-  responsible: string
-  text: string
+  taskListState$: Observable<TodoItem[]>
   router: string
 
-  constructor(public dialog: MatDialog, private _router: Router) {
+  constructor(
+    public dialog: MatDialog,
+    private _router: Router,
+    private store: Store<TaskListState>
+  ) {
     this.router = _router.url
   }
+  ngOnInit() {
+    this.taskListState$ = this.store.select((state) => state.tasks)
 
+    this.store.dispatch(new TaskActions.GetTasks())
+  }
+
+  /*
   removeItem(removeItem) {
     this.todoList = this.todoList.filter((item) => item !== removeItem)
   }
@@ -85,5 +81,5 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+   */
 }
