@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { TodoItem } from '../interfaces/todo-item'
-import { MatDialog, MatDialogConfig } from '@angular/material'
+import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { TaskFormComponent } from '../task-form/task-form.component'
 
@@ -24,7 +24,7 @@ import * as TaskActions from '../store/task.actions'
       <ul style="list-style-type:none">
         <div class="task-card-layout">
           <li *ngFor="let task of taskListState.tasks">
-            <app-task-card [task]="task"></app-task-card>
+            <app-task-card [task]="task" (deleted)="onDelete(task)"></app-task-card>
           </li>
         </div>
       </ul>
@@ -42,15 +42,18 @@ export class TaskManagerComponent implements OnInit {
   ) {
     this.router = _router.url
   }
+
   ngOnInit() {
     this.taskListState$ = this.store.select((state) => state.tasks)
-    //this.store.dispatch(new TaskActions.GetTasks())
   }
 
   onCreate(task) {
     this.store.dispatch(new TaskActions.CreateTask(task))
   }
 
+  onDelete(task) {
+    this.store.dispatch(new TaskActions.DeleteTask(task))
+  }
   openDialog(data) {
     let dialogRef
     /*
@@ -78,9 +81,7 @@ export class TaskManagerComponent implements OnInit {
 
     if (!data) {
       dialogRef = this.dialog.open(TaskFormComponent)
-      dialogRef.afterClosed().subscribe((result) => {
-        this.store.dispatch(new TaskActions.CreateTask(result))
-      })
+      dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
     }
   }
 

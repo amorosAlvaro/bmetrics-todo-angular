@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy } from '@angular/core'
       <mat-divider inset></mat-divider>
       <mat-card-actions *ngIf="router == '/admin'" class="card-footer">
         <button mat-raised-button color="accent">Edit</button>
-        <button mat-raised-button color="primary">Delete</button>
+        <button mat-raised-button color="primary" (click)="this.deleted.emit(task)">Delete</button>
       </mat-card-actions>
     </ng-container>
   </mat-card>`,
@@ -28,16 +28,14 @@ export class TaskCardComponent implements OnInit {
   @Output() created = new EventEmitter<any>()
   @Output() deleted = new EventEmitter<any>()
   @Output() edited = new EventEmitter<any>()
-  @Output() completed = new EventEmitter<any>()
+
   router: string
 
   constructor(private _router: Router) {
     this.router = _router.url
   }
 
-  ngOnInit() {
-    console.log('this task:', this.task)
-  }
+  ngOnInit() {}
   createTask(task) {
     console.log(task)
     this.created.emit(task)
