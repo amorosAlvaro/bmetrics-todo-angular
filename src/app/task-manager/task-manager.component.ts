@@ -14,7 +14,7 @@ import * as TaskActions from '../store/task.actions'
   selector: 'app-task-manager',
   template: ` <button
       *ngIf="router === '/admin'"
-      (click)="openDialog()"
+      (click)="openDialog(null)"
       mat-raised-button
       color="primary"
     >
@@ -44,8 +44,7 @@ export class TaskManagerComponent implements OnInit {
   }
   ngOnInit() {
     this.taskListState$ = this.store.select((state) => state.tasks)
-
-    this.store.dispatch(new TaskActions.GetTasks())
+    //this.store.dispatch(new TaskActions.GetTasks())
   }
 
   onCreate(task) {

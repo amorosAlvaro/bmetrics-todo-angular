@@ -24,11 +24,8 @@ import { RouterModule } from '@angular/router'
 import { TaskFormComponent } from './task-form/task-form.component'
 import { HeaderComponent } from './header/header.component'
 import { StoreModule } from '@ngrx/store'
-import { EffectsModule } from '@ngrx/effects'
-import { AppEffects } from './app.effects'
 
 import * as TaskReducer from './store/task.reducer'
-import { TaskEffects } from './store/task.effects'
 
 @NgModule({
   declarations: [
@@ -60,7 +57,6 @@ import { TaskEffects } from './store/task.effects'
     MatIconModule,
     MatGridListModule,
     StoreModule.forRoot({ tasks: TaskReducer.TaskReducer }),
-    EffectsModule.forRoot([TaskEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
