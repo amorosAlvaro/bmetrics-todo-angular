@@ -34,12 +34,14 @@ export class TaskFormComponent implements OnInit {
   title: string
   text: string
   responsible: string
+  id: number
 
   constructor(public dialogRef: MatDialogRef<TaskFormComponent>, @Inject(MAT_DIALOG_DATA) data) {
     if (data) {
       this.title = data.title
       this.text = data.text
       this.responsible = data.responsible
+      this.id = data.id
     }
   }
 
@@ -48,6 +50,7 @@ export class TaskFormComponent implements OnInit {
       title: this.title,
       responsible: this.responsible,
       text: this.text,
+      id: this.id,
     })
   }
 
