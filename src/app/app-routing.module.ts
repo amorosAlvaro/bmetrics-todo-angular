@@ -5,6 +5,7 @@ import { TaskManagerComponent } from './task-manager/task-manager.component'
 const routes: Routes = [
   { path: '', component: TaskManagerComponent },
   { path: 'admin', component: TaskManagerComponent },
+  { path: 'user', component: TaskManagerComponent },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

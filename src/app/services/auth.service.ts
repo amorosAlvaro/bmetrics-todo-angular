@@ -12,11 +12,12 @@ export class AuthService {
   login(username: string, password: string) {
     console.log(username)
     console.log(password)
-    this.isUserLogged = username === 'admin' && password === 'admin'
+    this.isUserLogged =
+      (username === 'admin' && password === 'admin') || (username === 'user' && password === 'user')
+
     localStorage.setItem('isUserLogged', this.isUserLogged ? 'true' : 'false')
 
-    // What is "of" and what is "pipe" why not map? what is tap?
-    return of(this.isUserLogged).pipe(tap((val) => console.log('user is authenticated', val)))
+    return of(this.isUserLogged)
   }
 
   logout(): void {

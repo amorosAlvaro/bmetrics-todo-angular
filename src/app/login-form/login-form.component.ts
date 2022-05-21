@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { TaskFormComponent } from '../task-form/task-form.component'
+// TODO: Group field in task-fom-component
 
 @Component({
   selector: 'app-login-form',
