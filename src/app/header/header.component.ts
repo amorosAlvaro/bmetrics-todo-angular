@@ -9,14 +9,27 @@ import { LoginFormComponent } from '../login-form/login-form.component'
   template: `
     <mat-toolbar>
       <span>Todo App For Bmetric</span>
-      <button *ngIf="!loggedIn" (click)="openDialog()">LOG IN</button>
-      <button *ngIf="loggedIn" (click)="onClickLogOut()">LOG OUT</button>
       <span class="example-spacer"></span>
-      <a routerLink="/admin">
-        <button mat-icon-button class="favorite-icon" aria-label="Switch to admin">
-          <mat-icon>account_circle</mat-icon>
-        </button>
-      </a>
+      <button
+        *ngIf="!loggedIn"
+        (click)="openDialog()"
+        mat-icon-button
+        class="favorite-icon"
+        aria-label="Switch to admin"
+      >
+        <span>Log In</span>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <button
+        *ngIf="loggedIn"
+        (click)="onClickLogOut()"
+        mat-icon-button
+        class="favorite-icon"
+        aria-label="Switch to admin"
+      >
+        <span>Log Out</span>
+        <mat-icon>account_circle</mat-icon>
+      </button>
     </mat-toolbar>
   `,
   styleUrls: ['./header.component.css'],
