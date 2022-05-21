@@ -6,15 +6,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
   template: `
     <mat-form-field appearance="fill">
       <mat-label>Task</mat-label>
-      <input matInput [(ngModel)]="title" />
+      <input matInput [(ngModel)]="title" maxlength="20" />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Responsible</mat-label>
-      <input matInput [(ngModel)]="responsible" />
+      <input matInput [(ngModel)]="responsible" maxlength="20" />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="text"></textarea>
+      <textarea matInput [(ngModel)]="text" maxlength="40"></textarea>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="onNoClick()">Save</button>
   `,

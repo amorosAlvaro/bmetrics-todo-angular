@@ -3,32 +3,42 @@ import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
+// TODO: remove any's
 
 @Component({
   selector: 'app-header',
   template: `
-    <mat-toolbar>
-      <span>Todo App For Bmetric</span>
-      <span class="example-spacer"></span>
+    <mat-toolbar class="header">
+      <div>
+        <a routerLink="/">
+          <button mat-button color="primary">
+            <mat-icon>dashboard</mat-icon>
+            <span>Todo List for Bmetric</span>
+          </button>
+        </a>
+        <a routerLink="/admin">
+          <button *ngIf="userName === 'admin'" mat-button color="primary">Admin</button>
+        </a>
+      </div>
       <button
         *ngIf="!loggedIn"
         (click)="openDialog()"
-        mat-icon-button
-        class="favorite-icon"
+        mat-raised-button
+        class="header-button"
         aria-label="Switch to admin"
+        color="primary"
       >
-        <span>Log In</span>
-        <mat-icon>account_circle</mat-icon>
+        Log In
       </button>
       <button
         *ngIf="loggedIn"
         (click)="onClickLogOut()"
-        mat-icon-button
-        class="favorite-icon"
+        mat-raised-button
+        class="header-button"
         aria-label="Switch to admin"
+        color="warn"
       >
-        <span>Log Out</span>
-        <mat-icon>account_circle</mat-icon>
+        Log Out
       </button>
     </mat-toolbar>
   `,

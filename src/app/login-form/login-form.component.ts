@@ -6,12 +6,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
   selector: 'app-login-form',
   template: `
     <mat-form-field appearance="fill">
-      <mat-label>Responsible</mat-label>
-      <input matInput [(ngModel)]="userName" />
+      <mat-label>User Name</mat-label>
+      <input matInput [(ngModel)]="userName" autocomplete="off" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="password"></textarea>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" autocomplete="off" [(ngModel)]="password" />
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="onNoClick()">Log In</button>
   `,
