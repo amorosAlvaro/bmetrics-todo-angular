@@ -6,7 +6,6 @@ import { AdminGuard } from './admin.guard'
 const routes: Routes = [
   { path: '', component: TaskManagerComponent },
   { path: 'admin', component: TaskManagerComponent, canActivate: [AdminGuard] },
-  { path: 'user', component: TaskManagerComponent },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

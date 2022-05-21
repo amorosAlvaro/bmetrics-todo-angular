@@ -16,11 +16,8 @@ export class AdminGuard implements CanActivate {
   checkLogin(): true | UrlTree {
     const isUserLogged: string = localStorage.getItem('isUserLogged')
     const userRole: string = localStorage.getItem('role')
-    console.log('userRole', userRole)
-    console.log('isUserLogged', isUserLogged)
 
     if (isUserLogged == 'true' && userRole === 'admin') {
-      console.log('admin router')
       this.router.parseUrl('/admin')
       return true
     }

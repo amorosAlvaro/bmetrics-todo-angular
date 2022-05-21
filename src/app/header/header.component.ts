@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
 
     this.authService.login(this.userName, this.password).subscribe((success) => {
       if (success && this.userName === 'admin') this.router.navigate(['/admin'])
-      if (success && this.userName === 'user') this.router.navigate(['/user'])
     })
     this.changeLoggedStatus()
   }
