@@ -10,6 +10,8 @@ import { LoginFormComponent } from '../login-form/login-form.component'
     <mat-toolbar>
       <span>Todo App For Bmetric</span>
       <button (click)="openDialog()">LOG IN</button>
+      <button (click)="onClickLogOut()">LOG OUT</button>
+
       <span class="example-spacer"></span>
       <a routerLink="/admin">
         <button mat-icon-button class="favorite-icon" aria-label="Switch to admin">
@@ -25,23 +27,23 @@ export class HeaderComponent implements OnInit {
   password: string
   constructor(private authService: AuthService, private router: Router, public dialog: MatDialog) {}
 
-  onClickSubmit(data: any) {
+  onClickLogin(data: any) {
     this.userName = data.userName
     this.password = data.password
 
-    console.log('header Login page: ' + this.userName)
-    console.log('header Login page: ' + this.password)
-
-    this.authService.login(this.userName, this.password).subscribe((data) => {
-      console.log('Is Login Success: ' + data)
-
-      if (data) this.router.navigate(['/admin'])
+    this.authService.login(this.userName, this.password).subscribe((success) => {
+      if (success) this.router.navigate(['/admin'])
     })
+  }
+
+  onClickLogOut() {
+    this.authService.logout()
+    this.router.navigate(['/'])
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(LoginFormComponent)
-    return dialogRef.afterClosed().subscribe((result) => this.onClickSubmit(result))
+    return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
   }
 
   ngOnInit() {}
