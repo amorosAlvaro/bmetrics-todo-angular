@@ -23,9 +23,9 @@ import { RouterModule } from '@angular/router'
 import { TaskFormComponent } from './task-form/task-form.component'
 import { HeaderComponent } from './header/header.component'
 import { StoreModule } from '@ngrx/store'
-
-import * as TaskReducer from './store/task.reducer'
+import { TaskReducer } from './store/task.reducer'
 import { LoginFormComponent } from './login-form/login-form.component'
+import { AuthService } from './services/auth.service'
 
 @NgModule({
   declarations: [
@@ -54,9 +54,9 @@ import { LoginFormComponent } from './login-form/login-form.component'
     MatToolbarModule,
     MatIconModule,
     MatGridListModule,
-    StoreModule.forRoot({ tasks: TaskReducer.TaskReducer }),
+    StoreModule.forRoot({ tasks: TaskReducer }),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
