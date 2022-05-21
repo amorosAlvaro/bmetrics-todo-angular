@@ -20,12 +20,12 @@ import {
 } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-
 import { TaskFormComponent } from './task-form/task-form.component'
 import { HeaderComponent } from './header/header.component'
 import { StoreModule } from '@ngrx/store'
 
 import * as TaskReducer from './store/task.reducer'
+import { LoginFormComponent } from './login-form/login-form.component'
 
 @NgModule({
   declarations: [
@@ -34,14 +34,12 @@ import * as TaskReducer from './store/task.reducer'
     TaskCardComponent,
     TaskFormComponent,
     HeaderComponent,
+    LoginFormComponent,
   ],
-  entryComponents: [TaskFormComponent],
+  entryComponents: [TaskFormComponent, LoginFormComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { path: '', component: TaskManagerComponent },
-      { path: 'admin', component: TaskManagerComponent },
-    ]),
+    RouterModule,
     AppRoutingModule,
     NoopAnimationsModule,
     MatCardModule,

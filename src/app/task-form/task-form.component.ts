@@ -25,10 +25,12 @@ export class TaskFormComponent implements OnInit {
     title: string
     text: string
     responsible: string
+    id: number
   }> = new EventEmitter<{
     title: string
     text: string
     responsible: string
+    id: number
   }>()
 
   title: string

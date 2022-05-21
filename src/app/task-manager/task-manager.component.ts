@@ -74,19 +74,10 @@ export class TaskManagerComponent implements OnInit {
         responsible: data.responsible,
         text: data.text,
       }
-
-      console.log('dialogConfig', dialogConfig.data)
-
       dialogRef = this.dialog.open(TaskFormComponent, dialogConfig)
-      dialogRef.afterClosed().subscribe((result: TodoItem) => {
-        console.log('result', result)
-
-        return this.onEdit(result)
-      })
+      return dialogRef.afterClosed().subscribe((result: TodoItem) => this.onEdit(result))
     }
-    if (!data) {
-      dialogRef = this.dialog.open(TaskFormComponent)
-      dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
-    }
+    dialogRef = this.dialog.open(TaskFormComponent)
+    return dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
   }
 }
