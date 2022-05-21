@@ -17,6 +17,7 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatGridListModule,
+  MatBadgeModule,
 } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
@@ -53,6 +54,7 @@ import { AuthService } from './services/auth.service'
     FormsModule,
     MatToolbarModule,
     MatIconModule,
+    MatBadgeModule,
     MatGridListModule,
     StoreModule.forRoot({ tasks: TaskReducer }),
   ],

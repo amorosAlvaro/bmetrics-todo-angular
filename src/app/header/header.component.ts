@@ -3,6 +3,10 @@ import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
+import { Store } from '@ngrx/store'
+import { TaskListState } from '../store/task.state'
+import { Observable } from 'rxjs'
+import { TodoItem } from '../interfaces/todo-item'
 // TODO: remove any's
 
 @Component({
@@ -16,9 +20,17 @@ import { LoginFormComponent } from '../login-form/login-form.component'
             <span>Todo List for Bmetric</span>
           </button>
         </a>
+
         <a routerLink="/admin">
           <button *ngIf="userName === 'admin'" mat-button color="primary">Admin</button>
         </a>
+      </div>
+      <div class="tasks" *ngIf="taskListState$ | async as taskListState">
+        <p class="counter">
+          <mat-icon matBadge="{{ taskListState.tasks.length }}" matBadgeColor="warn"
+            >description</mat-icon
+          >
+        </p>
       </div>
       <button
         *ngIf="!loggedIn"
@@ -48,7 +60,14 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean
   userName: string
   password: string
-  constructor(private authService: AuthService, private router: Router, public dialog: MatDialog) {}
+  taskListState$: Observable<TodoItem[]>
+
+  constructor(
+    private store: Store<TaskListState>,
+    private authService: AuthService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   onClickLogin(data: any) {
     this.userName = data.userName
@@ -78,6 +97,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('isUserLogged') == 'true') return (this.loggedIn = true)
+    this.taskListState$ = this.store.select((state) => state.tasks)
+    if (localStorage.getItem('isUserLogged') == 'true') this.loggedIn = true
   }
 }
