@@ -9,9 +9,8 @@ import { LoginFormComponent } from '../login-form/login-form.component'
   template: `
     <mat-toolbar>
       <span>Todo App For Bmetric</span>
-      <button (click)="openDialog()">LOG IN</button>
-      <button (click)="onClickLogOut()">LOG OUT</button>
-
+      <button *ngIf="!loggedIn" (click)="openDialog()">LOG IN</button>
+      <button *ngIf="loggedIn" (click)="onClickLogOut()">LOG OUT</button>
       <span class="example-spacer"></span>
       <a routerLink="/admin">
         <button mat-icon-button class="favorite-icon" aria-label="Switch to admin">
@@ -23,6 +22,7 @@ import { LoginFormComponent } from '../login-form/login-form.component'
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  loggedIn: boolean
   userName: string
   password: string
   constructor(private authService: AuthService, private router: Router, public dialog: MatDialog) {}
@@ -35,11 +35,14 @@ export class HeaderComponent implements OnInit {
       if (success && this.userName === 'admin') this.router.navigate(['/admin'])
       if (success && this.userName === 'user') this.router.navigate(['/user'])
     })
+    this.changeLoggedStatus()
   }
 
   onClickLogOut() {
     this.authService.logout()
+    localStorage.clear()
     this.router.navigate(['/'])
+    this.changeLoggedStatus()
   }
 
   openDialog() {
@@ -47,5 +50,12 @@ export class HeaderComponent implements OnInit {
     return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
   }
 
-  ngOnInit() {}
+  changeLoggedStatus() {
+    if (localStorage.getItem('isUserLogged') == 'true') return (this.loggedIn = true)
+    return (this.loggedIn = false)
+  }
+
+  ngOnInit() {
+    if (localStorage.getItem('isUserLogged') == 'true') return (this.loggedIn = true)
+  }
 }
