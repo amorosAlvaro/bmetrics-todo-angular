@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import { of } from 'rxjs'
-import { tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +9,13 @@ export class AuthService {
 
   // TODO:When exactly do I ned to use Observable?
   login(username: string, password: string) {
-    console.log(username)
-    console.log(password)
     this.isUserLogged =
       (username === 'admin' && password === 'admin') || (username === 'user' && password === 'user')
 
     localStorage.setItem('isUserLogged', this.isUserLogged ? 'true' : 'false')
+    if (this.isUserLogged) localStorage.setItem('role', username)
 
+    //TODO: WHAT DOES OFF DO
     return of(this.isUserLogged)
   }
 
