@@ -7,6 +7,8 @@ export const DELETE_TASK = '[TASK] DELETE_TASK'
 
 export const UPDATE_TASK = '[TASK] UPDATE_TASK'
 
+export const UPDATE_LOGIN = '[TASK] UPDATE_LOGIN'
+
 export class CreateTask implements Action {
   readonly type = CREATE_TASK
 
@@ -23,4 +25,9 @@ export class UpdateTask implements Action {
   constructor(public payload: TodoItem) {}
 }
 
-export type All = DeleteTask | CreateTask | UpdateTask
+export class UpdateLogin implements Action {
+  readonly type = UPDATE_LOGIN
+  constructor(public payload: boolean) {}
+}
+
+export type All = DeleteTask | CreateTask | UpdateTask | UpdateLogin

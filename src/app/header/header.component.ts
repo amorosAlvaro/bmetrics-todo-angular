@@ -5,14 +5,14 @@ import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import { TodoItem } from '../interfaces/todo-item'
 import { TaskListState } from '../interfaces/taskList-state'
+import * as TaskActions from '../store/task.actions'
 // TODO: remove any's
 
 @Component({
   selector: 'app-header',
   template: `
-    <mat-toolbar class="header">
+    <mat-toolbar class="header" *ngIf="taskListState$ | async as taskListState">
       <div>
         <a routerLink="/">
           <button mat-button color="primary">
@@ -25,23 +25,27 @@ import { TaskListState } from '../interfaces/taskList-state'
           <button *ngIf="userName === 'admin'" mat-button color="primary">Admin</button>
         </a>
       </div>
-      <div class="tasks" *ngIf="taskListState$ | async as taskListState">
+      <div class="tasks">
         <p class="counter">
-          <mat-icon matBadge="{{ taskListState }}" matBadgeColor="warn">description</mat-icon>
+          <mat-icon matBadge="{{ taskListState.tasks.length }}" matBadgeColor="warn"
+            >description</mat-icon
+          >
         </p>
       </div>
+      <div *ngIf="taskListState$ | async as taskListState">
+        <button
+          *ngIf="!taskListState.userIsLogged"
+          (click)="openDialog()"
+          mat-raised-button
+          class="header-button"
+          aria-label="Switch to admin"
+          color="primary"
+        >
+          Log In
+        </button>
+      </div>
       <button
-        *ngIf="!loggedIn"
-        (click)="openDialog()"
-        mat-raised-button
-        class="header-button"
-        aria-label="Switch to admin"
-        color="primary"
-      >
-        Log In
-      </button>
-      <button
-        *ngIf="loggedIn"
+        *ngIf="taskListState.userIsLogged"
         (click)="onClickLogOut()"
         mat-raised-button
         class="header-button"
@@ -55,10 +59,9 @@ import { TaskListState } from '../interfaces/taskList-state'
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  loggedIn: boolean
   userName: string
   password: string
-  taskListState$: Observable<number>
+  taskListState$: Observable<TaskListState>
 
   constructor(
     private authService: AuthService,
@@ -72,16 +75,21 @@ export class HeaderComponent implements OnInit {
     this.password = data.password
 
     this.authService.login(this.userName, this.password).subscribe((success) => {
-      if (success && this.userName === 'admin') this.router.navigate(['/admin'])
+      if (success && this.userName === 'admin') {
+        this.store.dispatch(new TaskActions.UpdateLogin(true))
+        this.router.navigate(['/admin'])
+      }
+      if (success) {
+        this.store.dispatch(new TaskActions.UpdateLogin(true))
+      }
     })
-    this.changeLoggedStatus()
   }
 
   onClickLogOut() {
     this.authService.logout()
     localStorage.clear()
+    this.store.dispatch(new TaskActions.UpdateLogin(false))
     this.router.navigate(['/'])
-    this.changeLoggedStatus()
   }
 
   openDialog() {
@@ -89,13 +97,10 @@ export class HeaderComponent implements OnInit {
     return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
   }
 
-  changeLoggedStatus() {
-    if (localStorage.getItem('isUserLogged') == 'true') return (this.loggedIn = true)
-    return (this.loggedIn = false)
-  }
-
   ngOnInit() {
-    this.taskListState$ = this.store.select((result) => result.taskList.tasks.length)
-    if (localStorage.getItem('isUserLogged') == 'true') this.loggedIn = true
+    this.taskListState$ = this.store.select((result) => result.taskList)
+
+    if (localStorage.getItem('isUserLogged') == 'true')
+      this.store.dispatch(new TaskActions.UpdateLogin(true))
   }
 }

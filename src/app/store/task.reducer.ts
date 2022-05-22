@@ -74,6 +74,14 @@ export function TaskReducer(state = initialState, action: Action) {
         tasks: editedTasks,
       }
     }
+    case TaskActions.UPDATE_LOGIN: {
+      console.log('reducer', state)
+      return {
+        ...state,
+        userIsLogged: action.payload,
+      }
+    }
+
     default:
       return state
   }
