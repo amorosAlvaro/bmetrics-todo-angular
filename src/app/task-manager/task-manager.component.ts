@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { TodoItem } from '../interfaces/todo-item'
+import { ITaskItem } from '../interfaces/interfaces'
 import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialogConfig } from '@angular/material'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-
 import * as TaskActions from '../store/task.actions'
-import { TaskListState } from '../interfaces/taskList-state'
+import { ITaskListState } from '../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-manager',
@@ -36,13 +35,13 @@ import { TaskListState } from '../interfaces/taskList-state'
   styleUrls: ['./task-manager.component.css'],
 })
 export class TaskManagerComponent implements OnInit {
-  taskListState$: Observable<TodoItem[]>
+  taskListState$: Observable<ITaskItem[]>
   router: string
 
   constructor(
     public dialog: MatDialog,
     private _router: Router,
-    private store: Store<TaskListState>
+    private store: Store<ITaskListState>
   ) {
     this.router = _router.url
   }
@@ -75,7 +74,7 @@ export class TaskManagerComponent implements OnInit {
         text: data.text,
       }
       dialogRef = this.dialog.open(TaskFormComponent, dialogConfig)
-      return dialogRef.afterClosed().subscribe((result: TodoItem) => this.onEdit(result))
+      return dialogRef.afterClosed().subscribe((result: ITaskItem) => this.onEdit(result))
     }
     dialogRef = this.dialog.open(TaskFormComponent)
     return dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
