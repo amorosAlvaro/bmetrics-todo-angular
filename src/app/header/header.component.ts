@@ -3,11 +3,10 @@ import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
-import { Store } from '@ngrx/store'
+import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { TaskListState } from '../interfaces/taskList-state'
 import * as TaskActions from '../store/task.actions'
-// TODO: remove any's
 
 @Component({
   selector: 'app-header',
@@ -22,9 +21,7 @@ import * as TaskActions from '../store/task.actions'
         </a>
 
         <a routerLink="/admin">
-          <button *ngIf="taskListState.taskList.userRole === 'admin'" mat-button color="primary">
-            Admin
-          </button>
+          <button (click)="onClickAdmin()" mat-button color="primary">Admin</button>
         </a>
       </div>
       <div class="tasks">
@@ -70,14 +67,10 @@ export class HeaderComponent implements OnInit {
 
   onClickLogin(data: any) {
     this.authService.login(data.userName, data.password).subscribe((success) => {
-      if (success && data.userName === 'admin') {
-        this.store.dispatch(new TaskActions.UpdateLogin(true))
-        this.store.dispatch(new TaskActions.UpdateRole('admin'))
-        this.router.navigate(['/admin'])
-      }
       if (success) {
         this.store.dispatch(new TaskActions.UpdateLogin(true))
-        this.store.dispatch(new TaskActions.UpdateRole('user'))
+        this.store.dispatch(new TaskActions.UpdateRole(data.userName))
+        data.userName === 'admin' && this.router.navigate(['/admin'])
       }
     })
   }
@@ -88,10 +81,22 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(new TaskActions.UpdateRole(null))
     this.router.navigate(['/'])
   }
-
   openDialog() {
     const dialogRef = this.dialog.open(LoginFormComponent)
     return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
+  }
+
+  onClickAdmin() {
+    this.taskListState$
+      .pipe(select('taskList'))
+      .subscribe((object) => {
+        if (object.userRole === 'admin') {
+          console.log('object.userRole', object.userRole)
+          return this.router.navigate(['/admin'])
+        }
+        return this.openDialog()
+      })
+      .unsubscribe()
   }
 
   ngOnInit() {
