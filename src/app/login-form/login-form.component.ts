@@ -6,17 +6,7 @@ import { ILoginForm } from '../interfaces/interfaces'
 
 @Component({
   selector: 'app-login-form',
-  template: `
-    <mat-form-field appearance="fill">
-      <mat-label>User Name</mat-label>
-      <input matInput [(ngModel)]="userName" autocomplete="off" />
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" autocomplete="off" [(ngModel)]="password" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onNoClick()">Log In</button>
-  `,
+  templateUrl: 'login-form.components.html',
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent {

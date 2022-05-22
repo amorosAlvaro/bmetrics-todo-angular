@@ -4,21 +4,7 @@ import { ITaskForm } from '../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-form',
-  template: `
-    <mat-form-field appearance="fill">
-      <mat-label>Task</mat-label>
-      <input matInput [(ngModel)]="title" maxlength="20" />
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Responsible</mat-label>
-      <input matInput [(ngModel)]="responsible" maxlength="20" />
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="text" maxlength="40"></textarea>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onNoClick()">Save</button>
-  `,
+  templateUrl: 'task-form-component.html',
   styleUrls: ['./task-form.component.css'],
 })
 export class TaskFormComponent {

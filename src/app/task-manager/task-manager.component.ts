@@ -11,27 +11,7 @@ import { ITaskListState } from '../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-manager',
-  template: ` <button
-      *ngIf="router === '/admin'"
-      (click)="openDialog(null)"
-      mat-raised-button
-      color="primary"
-    >
-      <span>Add Task</span>
-    </button>
-    <div class="tasks" *ngIf="taskListState$ | async as taskListState">
-      <ul style="list-style-type:none">
-        <div class="task-card-layout">
-          <li *ngFor="let task of taskListState">
-            <app-task-card
-              [task]="task"
-              (deleted)="onDelete(task)"
-              (edited)="openDialog(task)"
-            ></app-task-card>
-          </li>
-        </div>
-      </ul>
-    </div>`,
+  templateUrl: 'task-manager.component.html',
   styleUrls: ['./task-manager.component.css'],
 })
 export class TaskManagerComponent implements OnInit {

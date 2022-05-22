@@ -10,49 +10,7 @@ import * as TaskActions from '../store/task.actions'
 
 @Component({
   selector: 'app-header',
-  template: `
-    <mat-toolbar class="header" *ngIf="taskListState$ | async as taskListState">
-      <div>
-        <a routerLink="/">
-          <button mat-button color="primary">
-            <mat-icon>dashboard</mat-icon>
-            <span>Todo List for Bmetric</span>
-          </button>
-        </a>
-
-        <a routerLink="/admin">
-          <button (click)="onClickAdmin()" mat-button color="primary">Admin</button>
-        </a>
-      </div>
-      <div class="tasks">
-        <p class="counter">
-          <mat-icon matBadge="{{ taskListState.taskList.tasks.length }}" matBadgeColor="warn"
-            >description</mat-icon
-          >
-        </p>
-      </div>
-      <button
-        *ngIf="!taskListState.taskList.userIsLogged"
-        (click)="openDialog()"
-        mat-raised-button
-        class="header-button"
-        aria-label="Switch to admin"
-        color="primary"
-      >
-        Log In
-      </button>
-      <button
-        *ngIf="taskListState.taskList.userIsLogged"
-        (click)="onClickLogOut()"
-        mat-raised-button
-        class="header-button"
-        aria-label="Switch to admin"
-        color="warn"
-      >
-        Log Out
-      </button>
-    </mat-toolbar>
-  `,
+  templateUrl: 'header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {

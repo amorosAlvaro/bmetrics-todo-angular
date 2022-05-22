@@ -1,5 +1,4 @@
 import { Component } from '@angular/core'
-// TODO: fix bug when closing modal with click
 
 @Component({
   selector: 'app-root',
