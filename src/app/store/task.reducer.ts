@@ -27,15 +27,9 @@ const initialTasks = [
   {
     id: Date.now() + 4,
 
-    title: 'I',
-    text: 'test',
-    responsible: 'test',
-  },
-  {
-    id: Date.now() + 5,
-    title: 'test',
-    text: 'test',
-    responsible: 'test',
+    title: 'Laundry',
+    text: 'Do not forget to put the clothes out of the washing-machine before you go to sleep',
+    responsible: 'Álvaro',
   },
 ]
 
