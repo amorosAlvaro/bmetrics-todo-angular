@@ -1,27 +1,18 @@
-# TodoListBmetric
+# Todo List form Bmetric
+## By Álvaro Amorós Rodríguez
+22/05/2022
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
+### Project
 
-## Development server
+#### Description:
+This project consists on a basic todo-list developed with Angular8, NgRx, and angular material. No further dependencies have been added (besides prettier and eslint).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+When loading the page, the user will encounter a dashboard with a set of mock tasks. In order to edit, delete or add new tasks, the user will need to log in with the credential username: *admin* & password: *admin*
+This will enable te user to use the route http://localhost:4200/admin where he can perform CRUD operations. If the user logs in with the credential *user* & *user*  he will be only anble to see the dashboard.
 
-## Code scaffolding
+Both Logged in status and user role will be saved and local storange and will persist affter page refresh. Local storage will be cleared after user logs out.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Run the app:
+- npm -i
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- ng serve -o
