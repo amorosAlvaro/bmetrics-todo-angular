@@ -1,10 +1,14 @@
-.header {
+.desktop-header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-
-.nav-bar{
+@media screen and (max-width: 750px) {
+  .desktop-header {
+    display: none
+  }
+}
+.nav-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,4 +19,17 @@
   flex-direction: row;
   gap: 2rem
 }
+
+.mobile-header {
+  display: none;
+}
+@media screen and (max-width: 750px) {
+  .mobile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
 

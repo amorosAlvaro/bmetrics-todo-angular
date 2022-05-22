@@ -24,6 +24,16 @@ export class HeaderComponent implements OnInit {
     public store: Store<ITaskListState>
   ) {}
 
+  ngOnInit() {
+    this.taskListState$ = this.store.select((result) => result)
+
+    const localStorageLogin = localStorage.getItem('isUserLogged')
+    const localStorageRole = localStorage.getItem('role')
+
+    if (localStorageLogin == 'true') this.store.dispatch(new TaskActions.UpdateLogin(true))
+    if (localStorageRole) this.store.dispatch(new TaskActions.UpdateRole(localStorageRole))
+  }
+
   onClickLogin(data: { userName: string; password: string }) {
     this.authService
       .login(data.userName, data.password)
@@ -37,14 +47,14 @@ export class HeaderComponent implements OnInit {
       .unsubscribe()
   }
 
-  onClickLogOut() {
+  onClickLogout() {
     this.authService.logout()
     this.store.dispatch(new TaskActions.UpdateLogin(false))
     this.store.dispatch(new TaskActions.UpdateRole(null))
     this.router.navigate(['/'])
   }
   openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginFormComponent)
+    const dialogRef = this.dialog.open(LoginFormComponent, { disableClose: true })
     return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
   }
 
@@ -67,15 +77,5 @@ export class HeaderComponent implements OnInit {
 
   onCreate(task) {
     this.store.dispatch(new TaskActions.CreateTask(task))
-  }
-
-  ngOnInit() {
-    this.taskListState$ = this.store.select((result) => result)
-
-    const localStorageLogin = localStorage.getItem('isUserLogged')
-    const localStorageRole = localStorage.getItem('role')
-
-    if (localStorageLogin == 'true') this.store.dispatch(new TaskActions.UpdateLogin(true))
-    if (localStorageRole) this.store.dispatch(new TaskActions.UpdateRole(localStorageRole))
   }
 }

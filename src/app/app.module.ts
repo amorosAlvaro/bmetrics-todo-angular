@@ -18,6 +18,8 @@ import {
   MatIconModule,
   MatGridListModule,
   MatBadgeModule,
+  _MatMenuDirectivesModule,
+  MatMenuModule,
 } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
@@ -56,7 +58,10 @@ import { AuthService } from './services/auth.service'
     MatIconModule,
     MatBadgeModule,
     MatGridListModule,
+    _MatMenuDirectivesModule,
     StoreModule.forRoot({ taskList: TaskReducer }),
+    _MatMenuDirectivesModule,
+    MatMenuModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

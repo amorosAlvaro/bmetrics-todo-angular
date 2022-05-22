@@ -22,16 +22,10 @@ export class TaskManagerComponent implements OnInit {
     public dialog: MatDialog,
     private _router: Router,
     private store: Store<ITaskListState>
-  ) {
-    this.router = _router.url
-  }
+  ) {}
 
   ngOnInit() {
     this.taskListState$ = this.store.select((result) => result.taskList.tasks)
-  }
-
-  onCreate(task) {
-    this.store.dispatch(new TaskActions.CreateTask(task))
   }
 
   onDelete(task) {

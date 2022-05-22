@@ -10,7 +10,6 @@ import { ChangeDetectionStrategy } from '@angular/core'
 })
 export class TaskCardComponent {
   @Input() task
-
   @Output() created = new EventEmitter<any>()
   @Output() deleted = new EventEmitter<any>()
   @Output() edited = new EventEmitter<any>()
