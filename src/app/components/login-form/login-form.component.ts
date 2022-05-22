@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { ILoginForm } from '../interfaces/interfaces'
+import { ILoginForm } from '../../interfaces/interfaces'
 
 // TODO: Group field in task-fom-component
 

@@ -1,8 +1,13 @@
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding-right: 4rem;
+  justify-content: space-around;
+}
+
+.nav-bar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .header-button {

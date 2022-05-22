@@ -1,26 +1,33 @@
 <mat-toolbar class="header" *ngIf="taskListState$ | async as taskListState">
-  <div>
+  <div class="nav-bar">
     <a routerLink="/">
       <button mat-button color="primary">
         <mat-icon>dashboard</mat-icon>
         <span>Todo List for Bmetric</span>
       </button>
     </a>
-
-    <a routerLink="/admin">
-      <button (click)="onClickAdmin()" mat-button color="primary">Admin</button>
-    </a>
+    <button (click)="onClickAdmin()" mat-button color="primary">Admin</button>
   </div>
-  <div class="tasks">
-    <p class="counter">
-      <mat-icon matBadge="{{ taskListState.taskList.tasks.length }}" matBadgeColor="warn"
+  <p *ngIf="router.url === '/'" class="counter">
+    <mat-icon
+      color="primary"
+      matBadge="{{ taskListState.taskList.tasks.length }}"
+      matBadgeColor="warn"
       >description</mat-icon
-      >
-    </p>
-  </div>
+    >
+  </p>
+  <button
+    *ngIf="router.url === '/admin'"
+    (click)="openAddTaskDialog()"
+    mat-raised-button
+    color="primary"
+  >
+    <mat-icon>note_add </mat-icon>
+  </button>
+  <div class="tasks"></div>
   <button
     *ngIf="!taskListState.taskList.userIsLogged"
-    (click)="openDialog()"
+    (click)="openLoginDialog()"
     mat-raised-button
     class="header-button"
     aria-label="Switch to admin"

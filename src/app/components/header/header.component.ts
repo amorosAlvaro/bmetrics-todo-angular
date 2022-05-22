@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { AuthService } from '../services/auth.service'
+import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import { ITaskListState } from '../interfaces/interfaces'
-import * as TaskActions from '../store/task.actions'
+import { ITaskListState } from '../../interfaces/interfaces'
+import * as TaskActions from '../../store/task.actions'
+import { TaskFormComponent } from '../task-form/task-form.component'
 
 @Component({
   selector: 'app-header',
@@ -19,8 +20,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
-    private router: Router,
-    private store: Store<ITaskListState>
+    public router: Router,
+    public store: Store<ITaskListState>
   ) {}
 
   onClickLogin(data: { userName: string; password: string }) {
@@ -42,9 +43,14 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(new TaskActions.UpdateRole(null))
     this.router.navigate(['/'])
   }
-  openDialog() {
+  openLoginDialog() {
     const dialogRef = this.dialog.open(LoginFormComponent)
     return dialogRef.afterClosed().subscribe((result) => this.onClickLogin(result))
+  }
+
+  openAddTaskDialog() {
+    const dialogRef = this.dialog.open(TaskFormComponent, { disableClose: true })
+    return dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
   }
 
   onClickAdmin() {
@@ -54,9 +60,13 @@ export class HeaderComponent implements OnInit {
         if (object.userRole === 'admin') {
           return this.router.navigate(['/admin'])
         }
-        return this.openDialog()
+        return this.openLoginDialog()
       })
       .unsubscribe()
+  }
+
+  onCreate(task) {
+    this.store.dispatch(new TaskActions.CreateTask(task))
   }
 
   ngOnInit() {

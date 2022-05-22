@@ -2,9 +2,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { TaskManagerComponent } from './task-manager/task-manager.component'
+import { TaskManagerComponent } from './components/task-manager/task-manager.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { TaskCardComponent } from './task-card/task-card.component'
+import { TaskCardComponent } from './components/task-card/task-card.component'
 import {
   MatCardModule,
   MatDividerModule,
@@ -21,11 +21,11 @@ import {
 } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { TaskFormComponent } from './task-form/task-form.component'
-import { HeaderComponent } from './header/header.component'
+import { TaskFormComponent } from './components/task-form/task-form.component'
+import { HeaderComponent } from './components/header/header.component'
 import { StoreModule } from '@ngrx/store'
 import { TaskReducer } from './store/task.reducer'
-import { LoginFormComponent } from './login-form/login-form.component'
+import { LoginFormComponent } from './components/login-form/login-form.component'
 import { AuthService } from './services/auth.service'
 
 @NgModule({

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { ITaskItem } from '../interfaces/interfaces'
+import { ITaskItem } from '../../interfaces/interfaces'
 import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialogConfig } from '@angular/material'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import * as TaskActions from '../store/task.actions'
-import { ITaskListState } from '../interfaces/interfaces'
+import * as TaskActions from '../../store/task.actions'
+import { ITaskListState } from '../../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-manager',
@@ -42,21 +42,17 @@ export class TaskManagerComponent implements OnInit {
     this.store.dispatch(new TaskActions.UpdateTask(task))
   }
 
-  openDialog(data) {
-    let dialogRef
-
-    if (data) {
-      const dialogConfig = new MatDialogConfig()
-      dialogConfig.data = {
-        id: data.id,
-        title: data.title,
-        responsible: data.responsible,
-        text: data.text,
-      }
-      dialogRef = this.dialog.open(TaskFormComponent, dialogConfig)
-      return dialogRef.afterClosed().subscribe((result: ITaskItem) => this.onEdit(result))
+  openEditTaskDialog(data) {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.data = {
+      id: data.id,
+      title: data.title,
+      responsible: data.responsible,
+      text: data.text,
     }
-    dialogRef = this.dialog.open(TaskFormComponent)
-    return dialogRef.afterClosed().subscribe((result) => this.onCreate(result))
+    dialogConfig.disableClose = true
+
+    const dialogRef = this.dialog.open(TaskFormComponent, dialogConfig)
+    return dialogRef.afterClosed().subscribe((result: ITaskItem) => this.onEdit(result))
   }
 }

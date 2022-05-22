@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { TaskManagerComponent } from './task-manager/task-manager.component'
+import { TaskManagerComponent } from './components/task-manager/task-manager.component'
 import { AdminGuard } from './guards/admin.guard'
 
 const routes: Routes = [

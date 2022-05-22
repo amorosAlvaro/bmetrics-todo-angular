@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { ITaskForm } from '../interfaces/interfaces'
+import { ITaskForm } from '../../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-form',
