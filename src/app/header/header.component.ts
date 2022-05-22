@@ -27,14 +27,14 @@ import * as TaskActions from '../store/task.actions'
       </div>
       <div class="tasks">
         <p class="counter">
-          <mat-icon matBadge="{{ taskListState.tasks.length }}" matBadgeColor="warn"
+          <mat-icon matBadge="{{ taskListState.taskList.tasks.length }}" matBadgeColor="warn"
             >description</mat-icon
           >
         </p>
       </div>
       <div *ngIf="taskListState$ | async as taskListState">
         <button
-          *ngIf="!taskListState.userIsLogged"
+          *ngIf="!taskListState.taskList.userIsLogged"
           (click)="openDialog()"
           mat-raised-button
           class="header-button"
@@ -45,7 +45,7 @@ import * as TaskActions from '../store/task.actions'
         </button>
       </div>
       <button
-        *ngIf="taskListState.userIsLogged"
+        *ngIf="taskListState.taskList.userIsLogged"
         (click)="onClickLogOut()"
         mat-raised-button
         class="header-button"
@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskListState$ = this.store.select((result) => result.taskList)
+    this.taskListState$ = this.store.select((result) => result)
 
     if (localStorage.getItem('isUserLogged') == 'true')
       this.store.dispatch(new TaskActions.UpdateLogin(true))
