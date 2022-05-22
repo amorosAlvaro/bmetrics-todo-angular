@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Inject, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { ITaskForm } from '../interfaces/interfaces'
 
 @Component({
   selector: 'app-task-form',
@@ -20,18 +21,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
   `,
   styleUrls: ['./task-form.component.css'],
 })
-export class TaskFormComponent implements OnInit {
-  @Output() submit: EventEmitter<{
-    title: string
-    text: string
-    responsible: string
-    id: number
-  }> = new EventEmitter<{
-    title: string
-    text: string
-    responsible: string
-    id: number
-  }>()
+export class TaskFormComponent {
+  @Output() submit: EventEmitter<ITaskForm> = new EventEmitter<ITaskForm>()
 
   title: string
   text: string
@@ -55,6 +46,4 @@ export class TaskFormComponent implements OnInit {
       id: this.id,
     })
   }
-
-  ngOnInit() {}
 }

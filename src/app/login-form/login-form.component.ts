@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Inject, Output } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { ILoginForm } from '../interfaces/interfaces'
+
 // TODO: Group field in task-fom-component
 
 @Component({
@@ -17,14 +19,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
   `,
   styleUrls: ['./login-form.component.css'],
 })
-export class LoginFormComponent implements OnInit {
-  @Output() submit: EventEmitter<{
-    userName: string
-    password: string
-  }> = new EventEmitter<{
-    userName: string
-    password: string
-  }>()
+export class LoginFormComponent {
+  @Output() submit: EventEmitter<ILoginForm> = new EventEmitter<ILoginForm>()
   userName: string
   password: string
 
@@ -41,6 +37,4 @@ export class LoginFormComponent implements OnInit {
       password: this.password,
     })
   }
-
-  ngOnInit() {}
 }

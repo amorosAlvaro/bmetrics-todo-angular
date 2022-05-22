@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
-import { TaskListState } from '../interfaces/taskList-state'
+import { ITaskListState } from '../interfaces/interfaces'
 import * as TaskActions from '../store/task.actions'
 
 @Component({
@@ -56,23 +56,26 @@ import * as TaskActions from '../store/task.actions'
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  taskListState$: Observable<TaskListState>
+  taskListState$: Observable<ITaskListState>
 
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
-    private store: Store<TaskListState>
+    private store: Store<ITaskListState>
   ) {}
 
-  onClickLogin(data: any) {
-    this.authService.login(data.userName, data.password).subscribe((success) => {
-      if (success) {
-        this.store.dispatch(new TaskActions.UpdateLogin(true))
-        this.store.dispatch(new TaskActions.UpdateRole(data.userName))
-        data.userName === 'admin' && this.router.navigate(['/admin'])
-      }
-    })
+  onClickLogin(data: { userName: string; password: string }) {
+    this.authService
+      .login(data.userName, data.password)
+      .subscribe((success) => {
+        if (success) {
+          this.store.dispatch(new TaskActions.UpdateLogin(true))
+          this.store.dispatch(new TaskActions.UpdateRole(data.userName))
+          data.userName === 'admin' && this.router.navigate(['/admin'])
+        }
+      })
+      .unsubscribe()
   }
 
   onClickLogOut() {
@@ -91,7 +94,6 @@ export class HeaderComponent implements OnInit {
       .pipe(select('taskList'))
       .subscribe((object) => {
         if (object.userRole === 'admin') {
-          console.log('object.userRole', object.userRole)
           return this.router.navigate(['/admin'])
         }
         return this.openDialog()
