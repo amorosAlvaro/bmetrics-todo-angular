@@ -9,6 +9,8 @@ export const UPDATE_TASK = '[TASK] UPDATE_TASK'
 
 export const UPDATE_LOGIN = '[TASK] UPDATE_LOGIN'
 
+export const UPDATE_ROLE = '[TASK] UPDATE_ROLE'
+
 export class CreateTask implements Action {
   readonly type = CREATE_TASK
 
@@ -30,4 +32,8 @@ export class UpdateLogin implements Action {
   constructor(public payload: boolean) {}
 }
 
-export type All = DeleteTask | CreateTask | UpdateTask | UpdateLogin
+export class UpdateRole implements Action {
+  readonly type = UPDATE_ROLE
+  constructor(public payload: string) {}
+}
+export type All = DeleteTask | CreateTask | UpdateTask | UpdateLogin | UpdateRole

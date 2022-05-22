@@ -22,7 +22,9 @@ import * as TaskActions from '../store/task.actions'
         </a>
 
         <a routerLink="/admin">
-          <button *ngIf="userName === 'admin'" mat-button color="primary">Admin</button>
+          <button *ngIf="taskListState.taskList.userRole === 'admin'" mat-button color="primary">
+            Admin
+          </button>
         </a>
       </div>
       <div class="tasks">
@@ -32,18 +34,16 @@ import * as TaskActions from '../store/task.actions'
           >
         </p>
       </div>
-      <div *ngIf="taskListState$ | async as taskListState">
-        <button
-          *ngIf="!taskListState.taskList.userIsLogged"
-          (click)="openDialog()"
-          mat-raised-button
-          class="header-button"
-          aria-label="Switch to admin"
-          color="primary"
-        >
-          Log In
-        </button>
-      </div>
+      <button
+        *ngIf="!taskListState.taskList.userIsLogged"
+        (click)="openDialog()"
+        mat-raised-button
+        class="header-button"
+        aria-label="Switch to admin"
+        color="primary"
+      >
+        Log In
+      </button>
       <button
         *ngIf="taskListState.taskList.userIsLogged"
         (click)="onClickLogOut()"
@@ -59,36 +59,33 @@ import * as TaskActions from '../store/task.actions'
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  userName: string
-  password: string
   taskListState$: Observable<TaskListState>
 
   constructor(
+    public dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
-    public dialog: MatDialog,
     private store: Store<TaskListState>
   ) {}
 
   onClickLogin(data: any) {
-    this.userName = data.userName
-    this.password = data.password
-
-    this.authService.login(this.userName, this.password).subscribe((success) => {
-      if (success && this.userName === 'admin') {
+    this.authService.login(data.userName, data.password).subscribe((success) => {
+      if (success && data.userName === 'admin') {
         this.store.dispatch(new TaskActions.UpdateLogin(true))
+        this.store.dispatch(new TaskActions.UpdateRole('admin'))
         this.router.navigate(['/admin'])
       }
       if (success) {
         this.store.dispatch(new TaskActions.UpdateLogin(true))
+        this.store.dispatch(new TaskActions.UpdateRole('user'))
       }
     })
   }
 
   onClickLogOut() {
     this.authService.logout()
-    localStorage.clear()
     this.store.dispatch(new TaskActions.UpdateLogin(false))
+    this.store.dispatch(new TaskActions.UpdateRole(null))
     this.router.navigate(['/'])
   }
 
@@ -100,7 +97,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.taskListState$ = this.store.select((result) => result)
 
-    if (localStorage.getItem('isUserLogged') == 'true')
-      this.store.dispatch(new TaskActions.UpdateLogin(true))
+    const localStorageLogin = localStorage.getItem('isUserLogged')
+    const localStorageRole = localStorage.getItem('role')
+
+    if (localStorageLogin == 'true') this.store.dispatch(new TaskActions.UpdateLogin(true))
+    if (localStorageRole) this.store.dispatch(new TaskActions.UpdateRole(localStorageRole))
   }
 }
