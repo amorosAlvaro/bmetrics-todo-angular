@@ -56,7 +56,7 @@ import { AuthService } from './services/auth.service'
     MatIconModule,
     MatBadgeModule,
     MatGridListModule,
-    StoreModule.forRoot({ tasks: TaskReducer }),
+    StoreModule.forRoot({ taskList: TaskReducer }),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

@@ -4,9 +4,9 @@ import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 import { LoginFormComponent } from '../login-form/login-form.component'
 import { Store } from '@ngrx/store'
-import { TaskListState } from '../store/task.state'
 import { Observable } from 'rxjs'
 import { TodoItem } from '../interfaces/todo-item'
+import { TaskListState } from '../interfaces/taskList-state'
 // TODO: remove any's
 
 @Component({
@@ -27,9 +27,7 @@ import { TodoItem } from '../interfaces/todo-item'
       </div>
       <div class="tasks" *ngIf="taskListState$ | async as taskListState">
         <p class="counter">
-          <mat-icon matBadge="{{ taskListState.tasks.length }}" matBadgeColor="warn"
-            >description</mat-icon
-          >
+          <mat-icon matBadge="{{ taskListState }}" matBadgeColor="warn">description</mat-icon>
         </p>
       </div>
       <button
@@ -60,13 +58,13 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean
   userName: string
   password: string
-  taskListState$: Observable<TodoItem[]>
+  taskListState$: Observable<number>
 
   constructor(
-    private store: Store<TaskListState>,
     private authService: AuthService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private store: Store<TaskListState>
   ) {}
 
   onClickLogin(data: any) {
@@ -97,7 +95,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskListState$ = this.store.select((state) => state.tasks)
+    this.taskListState$ = this.store.select((result) => result.taskList.tasks.length)
     if (localStorage.getItem('isUserLogged') == 'true') this.loggedIn = true
   }
 }

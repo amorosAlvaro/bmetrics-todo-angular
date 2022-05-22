@@ -4,11 +4,11 @@ import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { TaskFormComponent } from '../task-form/task-form.component'
 import { MatDialogConfig } from '@angular/material'
-import { TaskListState } from '../store/task.state'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 
 import * as TaskActions from '../store/task.actions'
+import { TaskListState } from '../interfaces/taskList-state'
 
 @Component({
   selector: 'app-task-manager',
@@ -23,7 +23,7 @@ import * as TaskActions from '../store/task.actions'
     <div class="tasks" *ngIf="taskListState$ | async as taskListState">
       <ul style="list-style-type:none">
         <div class="task-card-layout">
-          <li *ngFor="let task of taskListState.tasks">
+          <li *ngFor="let task of taskListState">
             <app-task-card
               [task]="task"
               (deleted)="onDelete(task)"
@@ -48,7 +48,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskListState$ = this.store.select((state) => state.tasks)
+    this.taskListState$ = this.store.select((result) => result.taskList.tasks)
   }
 
   onCreate(task) {

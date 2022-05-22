@@ -1,6 +1,4 @@
-import { TaskListState } from './task.state'
 import * as TaskActions from './task.actions'
-import { TodoItem } from '../interfaces/todo-item'
 const initialTasks = [
   {
     id: Date.now(),
@@ -43,31 +41,28 @@ const initialTasks = [
 
 export type Action = TaskActions.All
 
-const defaultTaskStates: TodoItem[] = []
-
-const defaultState: TaskListState = {
-  tasks: defaultTaskStates,
+const initialState = {
+  tasks: initialTasks,
+  userIsLogged: false,
+  userRole: null,
 }
 
-export function TaskReducer(state = defaultState, action: Action) {
+export function TaskReducer(state = initialState, action: Action) {
   switch (action.type) {
     case TaskActions.DELETE_TASK: {
       return { ...state, ...state.tasks.splice(state.tasks.indexOf(action.payload), 1) }
     }
     case TaskActions.CREATE_TASK: {
       return {
+        ...state,
         tasks: [...state.tasks, action.payload],
       }
     }
     case TaskActions.UPDATE_TASK: {
       const editedTasks = state.tasks.map((task) => {
-        console.log('task.id', task.id)
-        console.log('payload.id', action.payload)
         if (task.id !== action.payload.id) {
           return task
         }
-        console.log('fit return', task)
-
         return {
           ...task,
           title: action.payload.title,
@@ -75,18 +70,11 @@ export function TaskReducer(state = defaultState, action: Action) {
           responsible: action.payload.responsible,
         }
       })
-
-      console.log('action.payload', action.payload)
-
-      console.log('editedTasks', editedTasks)
       return {
         tasks: editedTasks,
       }
     }
-
     default:
-      return {
-        tasks: [...initialTasks],
-      }
+      return state
   }
 }
